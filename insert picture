@@ -1,0 +1,41 @@
+'insert picture into excel cell box by XXXXX--XXXXX and indefinite row array.
+
+
+
+Sub InsertPictures()
+'Update 20140513
+Dim PicList() As Variant
+Dim PicFormat As String
+Dim Rng As Range
+Dim sShape As Shape
+Dim Seq1 As Integer
+On Error Resume Next
+PicList = Application.GetOpenFilename(PicFormat, MultiSelect:=True)
+xColIndex = Application.ActiveCell.Column
+If IsArray(PicList) Then
+    xRowIndex = Application.ActiveCell.Row
+    For lLoop = LBound(PicList) To UBound(PicList)
+        Seq1 = Seq1 + 1
+        Seq2 = Seq2 + 1
+        Set Rng = Cells(xRowIndex, xColIndex)
+        Set sShape = ActiveSheet.Shapes.AddPicture(PicList(lLoop), msoFalse, msoCTrue, Rng.Left, Rng.Top, Rng.Width, Rng.Height)
+        xColIndex = xColIndex + 1
+        
+    
+        If Seq1 = 5 Then
+        
+        Seq1 = 0
+        xColIndex = xColIndex + 1
+    End If
+    
+        
+        If Seq2 = 10 Then
+        xRowIndex = xRowIndex + 1
+        xColIndex = xColIndex - 12
+        Seq1 = 0
+        Seq2 = 0
+    End If
+    Next
+End If
+
+
